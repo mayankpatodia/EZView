@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>EZView</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    
+
+    <style type="text/css">
+      .read{
+        color: #ccc;
+      }
+
+      .reading{
+        color: orange;
+      }
+
+      .unread{
+        color: #000;
+      }
+    </style>
+    
+    <!-- ng-class="aaaa>word.start?'finished':(aaaa<word.start?'not-started':'current')" -->
+
+
+  </head>
+  <body class="back" >
+    <div class="container main" ng-app="myApp" ng-controller="myCtrl" id="my_id">
+      <div class="card">
+        <div class="page-header" style="margin-top: 0px;">
+          <div class="container">
+             <h2 class="col-md-7">EZView - Transcription Viewer</h2>
+            <button class="btn btn-default col-md-3" style="margin-top: 20px;margin-left: 132px;" ng-click="toggleShown()">{{button_text}}</button>
+          </div>
+        </div>
+        <div class="row content" style="padding: 30px;">
+          <p ng-repeat="sentence in final_trans" style="font-size: 1.1em;">
+            <b>Speaker {{sentence.speaker}}: </b>
+            <span class="my-word" ng-repeat="word in sentence.words" data-word="{{word.word}}" data-start="{{word.start}}" data-end="{{word.end}}" ng-click="wordClick(word)" ng-class="curr<word.start?'unread':(curr>word.end?'read':'reading')"> 
+              {{word.word}}
+            </span>
+          </p>
+        </div>
+        <div class="row">
+          <audio id="myAudio" controls ezview-audio>
+            <source src="audio.mp3" type="audio/mp3">
+            Your browser does not support HTML5 video.
+          </audio>
+        </div>
+      </div>
+      <br/>
+      <div class="card" ng-show="shown">
+        <div class="page-header" style="margin-top: 0px;">
+          <div class="container">
+             <h2 class="col-md-7">EZView - Transcript JSON</h2>
+          </div>
+        </div>
+        <div class="row content" style="padding: 30px; max-height: 500px;">
+          <p><pre>{{transcript_json}}</pre></p>
+        </div>
+      </div>
+    </div>
+     
+      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+      <script src="js/jquery-3.1.1.js"></script>
+      <!-- Include all compiled plugins (below), or include individual files as needed -->
+      <script src="js/angular.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script src="js/index.js"></script>
+    </body>
+  </html>
